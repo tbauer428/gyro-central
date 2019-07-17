@@ -14,10 +14,13 @@ class App extends React.Component {
       data: [],
       currentPage: "LandingPage"
     };
+
+    this.eventSource = new EventSource("/EventSource");
   }
 
   componentDidMount = () => {
     this.loadOrders();
+    this.eventSource.onmessage = e => console.log(e.data);
   };
 
   loadOrders = e => {
