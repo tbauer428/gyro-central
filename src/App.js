@@ -3,6 +3,7 @@ import "./App.css";
 import axios from "axios";
 import LandingPage from "./components/LandingPage";
 import Menu from "./components/Menu";
+import Cart from "./components/Cart";
 
 class App extends React.Component {
   constructor(props) {
@@ -36,15 +37,70 @@ class App extends React.Component {
     );
   };
 
-  addItemToOrder = (item, quantity) => {
-    this.setState({
-      currentOrderContents: [
-        ...this.state.currentOrderContents,
-        {
-          ...item,
-          quantity
+  checkItemsInOrder = itemToBeEvaluated => {
+    let check = 0;
+    this.state.currentOrderContents.map(item => {
+      if (item.id === itemToBeEvaluated.id) {
+        check = 1;
+      }
+    });
+    return check === 1;
+  };
+
+  addItemToOrder = (newItem, quantity) => {
+    if (this.checkItemsInOrder(newItem)) {
+      let itemToBeUpdated = {};
+      this.state.currentOrderContents.map(itemCurrentlyInCart => {
+        if (itemCurrentlyInCart.id === newItem.id) {
+          itemToBeUpdated = itemCurrentlyInCart;
         }
-      ]
+        return null;
+      });
+
+      itemToBeUpdated = {
+        ...itemToBeUpdated,
+        quantity: itemToBeUpdated.quantity + quantity
+      };
+      let newOrderContents = this.state.currentOrderContents.map(item => {
+        if (item.id === itemToBeUpdated.id) {
+          return itemToBeUpdated;
+        } else {
+          return item;
+        }
+      });
+      this.setState({
+        currentOrderContents: newOrderContents
+      });
+    } else {
+      this.setState({
+        currentOrderContents: [
+          ...this.state.currentOrderContents,
+          {
+            ...newItem,
+            quantity
+          }
+        ]
+      });
+    }
+  };
+
+  handleUpdateQuantity = (item, quantity) => {
+    const updatedOrderContents = this.state.currentOrderContents.map(
+      itemInCart => {
+        if (itemInCart.id === item.id) {
+          itemInCart.quantity = quantity;
+        }
+        return itemInCart;
+      }
+    );
+    this.setState({
+      currentOrderContents: updatedOrderContents
+    });
+  };
+
+  handleCheckout = e => {
+    this.setState({
+      currentPage: "Cart"
     });
   };
 
@@ -53,7 +109,16 @@ class App extends React.Component {
       case "LandingPage":
         return <LandingPage addOrder={this.addOrder} />;
       case "Menu":
-        return <Menu submit={this.addItemToOrder} />;
+        return (
+          <Menu submit={this.addItemToOrder} checkout={this.handleCheckout} />
+        );
+      case "Cart":
+        return (
+          <Cart
+            currentOrderContents={this.state.currentOrderContents}
+            submit={this.handleUpdateQuantity}
+          />
+        );
       default:
         return;
     }

@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 
-const MenuItem = ({ item, submit }) => {
-  const [quantity, setQuantity] = useState("");
+const MenuItem = ({ item, submit, defaultValue, submitButtonText }) => {
+  const [quantity, setQuantity] = useState(1);
 
   const handleQuantity = e => {
     e.preventDefault();
-    setQuantity(e.target.value);
+    setQuantity(Number(e.target.value));
   };
 
   const handleSubmit = e => {
     e.preventDefault();
     submit(item, quantity);
-    setQuantity("");
   };
 
   return (
@@ -19,14 +18,14 @@ const MenuItem = ({ item, submit }) => {
       <div>
         {item.name} ${item.price}
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           type="number"
-          defaultValue="1"
+          defaultValue={defaultValue}
           min="1"
           onChange={handleQuantity}
         />
-        <div onClick={handleSubmit}>Add to Order</div>
+        <div onClick={handleSubmit}>{submitButtonText}</div>
       </form>
     </>
   );
