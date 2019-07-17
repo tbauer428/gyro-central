@@ -10,12 +10,22 @@ const sendOrder = (address, currentOrderID, currentOrderContents) => {
   });
 };
 
-const Cart = ({ currentOrderContents, submit, currentOrderID }) => {
+const Cart = ({
+  currentOrderContents,
+  submit,
+  currentOrderID,
+  handleCancelOrder
+}) => {
   const [address, setAddress] = useState("");
 
   const handleAddress = e => {
     e.preventDefault();
     setAddress(e.target.value);
+  };
+
+  const cancelOrder = currentOrderID => {
+    axios.delete(`/orders/delete/${currentOrderID}`);
+    handleCancelOrder();
   };
 
   return (
@@ -36,9 +46,14 @@ const Cart = ({ currentOrderContents, submit, currentOrderID }) => {
       </div>
       <div>
         <input type="text" placeholder="Your address" onKeyUp={handleAddress} />
-        <div onClick={sendOrder(address, currentOrderID, currentOrderContents)}>
+        <div
+          onClick={() =>
+            sendOrder(address, currentOrderID, currentOrderContents)
+          }
+        >
           Send Order
         </div>
+        <div onClick={() => cancelOrder(currentOrderID)}>Cancel Order</div>
       </div>
     </div>
   );

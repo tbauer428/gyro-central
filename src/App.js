@@ -98,9 +98,20 @@ class App extends React.Component {
     });
   };
 
-  handleCheckout = e => {
+  handleCheckout = () => {
     this.setState({
       currentPage: "Cart"
+    });
+  };
+
+  handleCancelOrder = () => {
+    axios.get("/orders/all").then(response => {
+      this.setState({
+        data: response.data,
+        currentOrderContents: [],
+        currentOrderID: "",
+        currentPage: "LandingPage"
+      });
     });
   };
 
@@ -118,6 +129,7 @@ class App extends React.Component {
             currentOrderContents={this.state.currentOrderContents}
             submit={this.handleUpdateQuantity}
             currentOrderID={this.state.currentOrderID}
+            handleCancelOrder={this.handleCancelOrder}
           />
         );
       default:
