@@ -117,6 +117,7 @@ class App extends React.Component {
           <Cart
             currentOrderContents={this.state.currentOrderContents}
             submit={this.handleUpdateQuantity}
+            currentOrderID={this.state.currentOrderID}
           />
         );
       default:
