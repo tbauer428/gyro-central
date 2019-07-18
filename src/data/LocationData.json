@@ -4,19 +4,22 @@
             "id": "1",
             "name": "Bairaktaris Taverna",
             "lat": 37.9760836,
-            "lng": 23.7245018
+            "lng": 23.7245018,
+            "address": "Kirikiou 6, Athens"
         },
         {
             "id": "2",
-            "name": "Oasis",
+            "name": "Souvlaki Oasis",
             "lat": 35.5031965,
-            "lng": 24.0047305
+            "lng": 24.0047305,
+            "address": "Voloudaki 2-4, Chania"
         },
         {
             "id": "3",
             "name": "Ammos Gyros",
             "lat": 36.8465525,
-            "lng": 22.2566546
+            "lng": 22.2566546,
+            "address": "Stoupa"
         }
     ]
 }

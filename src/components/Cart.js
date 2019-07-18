@@ -16,7 +16,7 @@ const Cart = ({
   submit,
   currentOrderID,
   handleCancelOrder,
-  currentPage
+  total
 }) => {
   const [address, setAddress] = useState("");
 
@@ -46,6 +46,9 @@ const Cart = ({
         })}
       </div>
       <div className="cart-order-container">
+        <div>
+          <h2>Total: {}</h2>
+        </div>
         <input type="text" placeholder="Your address" onKeyUp={handleAddress} />
         <div className="cart-buttons">
           <Button

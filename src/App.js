@@ -14,18 +14,20 @@ class App extends React.Component {
       currentOrderContents: [],
       data: [],
       currentPage: "Welcome",
-      modal: ""
+      modal: "",
+      cartCount: 0,
+      total: 0
     };
 
-    this.eventSource = new EventSource("/EventSource");
+    //this.eventSource = new EventSource("/EventSource");
   }
 
   componentDidMount = () => {
     this.loadOrders();
-    this.eventSource.onopen = () => console.log("Connection to Backend Open");
-    this.eventSource.onmessage = e => console.log(e.data);
-    this.eventSource.onerror = e =>
-      console.log("Connection to Backend Errored Out");
+    // this.eventSource.onopen = () => console.log("Connection to Backend Open");
+    // this.eventSource.onmessage = e => console.log(e.data);
+    // this.eventSource.onerror = e =>
+    //   console.log("Connection to Backend Errored Out");
   };
 
   loadOrders = e => {
@@ -53,6 +55,7 @@ class App extends React.Component {
 
   checkItemsInOrder = itemToBeEvaluated => {
     let check = 0;
+    // eslint-disable-next-line array-callback-return
     this.state.currentOrderContents.map(item => {
       if (item.id === itemToBeEvaluated.id) {
         check = 1;
@@ -96,6 +99,7 @@ class App extends React.Component {
         ]
       });
     }
+    this.adjustCartCount(quantity);
   };
 
   handleUpdateQuantity = (item, quantity) => {
@@ -107,9 +111,15 @@ class App extends React.Component {
         return itemInCart;
       }
     );
-    this.setState({
-      currentOrderContents: updatedOrderContents
-    });
+    this.setState(
+      {
+        currentOrderContents: updatedOrderContents
+      },
+      () => {
+        this.calculateTotal();
+        this.calculateNumberItemsInCart();
+      }
+    );
   };
 
   handleCheckout = () => {
@@ -117,8 +127,10 @@ class App extends React.Component {
       this.setState({ modal: "noItemsInOrder" });
     } else {
       this.setState({
-        currentPage: "Cart"
+        currentPage: "Cart",
       });
+      this.calculateNumberItemsInCart();
+      this.calculateTotal();
     }
   };
 
@@ -139,6 +151,26 @@ class App extends React.Component {
     });
   };
 
+  calculateNumberItemsInCart = () => {
+    let totalItems = 0;
+    this.state.currentOrderContents.map(
+      orderItem => (totalItems += orderItem.quantity)
+    );
+    this.setState({ cartCount: totalItems });
+  };
+
+  calculateTotal = () => {
+    let total = 0;
+    this.state.currentOrderContents.map(
+      orderItem => (total += orderItem.quantity * orderItem.price)
+    );
+    this.setState({ total: total.toFixed(2) });
+  };
+
+  adjustCartCount = (quantity) => {
+    this.setState({cartCount: this.state.cartCount+quantity})
+  }
+
   render() {
     switch (this.state.currentPage) {
       case "Welcome":
@@ -156,8 +188,12 @@ class App extends React.Component {
               handleCheckout={this.handleCheckout}
               modalStatus={this.state.modal}
               resetModal={this.resetModal}
+              cartCount={this.state.cartCount}
             />
-            <Menu submit={this.addItemToOrder} checkout={this.handleCheckout} />
+            <Menu
+              submit={this.addItemToOrder}
+              checkout={this.handleCheckout}
+            />
           </>
         );
       case "Cart":
@@ -169,13 +205,14 @@ class App extends React.Component {
               handleCheckout={this.handleCheckout}
               modalStatus={this.state.modal}
               resetModal={this.resetModal}
+              cartCount={this.state.cartCount}
             />
             <Cart
               currentOrderContents={this.state.currentOrderContents}
               submit={this.handleUpdateQuantity}
               currentOrderID={this.state.currentOrderID}
               handleCancelOrder={this.handleCancelOrder}
-              currentPage={this.state.currentPage}
+              total={this.state.total}
             />
           </>
         );

@@ -8,7 +8,8 @@ const HeaderBar = ({
   currentPage,
   handleCheckout,
   modalStatus,
-  resetModal
+  resetModal,
+  cartCount
 }) => (
   <div className="HeaderBar">
     <Header size="huge" block>
@@ -16,16 +17,21 @@ const HeaderBar = ({
         <img
           src={MenuImg}
           alt="Go to menu"
-          onClick={currentPage !== "Menu" && (() => changeCurrentPage("Menu"))}
+          onClick={
+            currentPage !== "Menu" ? () => changeCurrentPage("Menu") : null
+          }
           className="header-bar-button"
         />
         <div>{currentPage}</div>
-        <img
-          src={CartImg}
-          alt="Go to cart"
-          onClick={currentPage !== "Cart" && handleCheckout}
-          className="header-bar-button"
-        />
+        <div className="cart-icon-container">
+          {cartCount}
+          <img
+            src={CartImg}
+            alt="Go to cart"
+            onClick={currentPage !== "Cart" ? handleCheckout : null}
+            className="header-bar-button"
+          />
+        </div>
       </div>
     </Header>
     <Modal open={modalStatus === "noItemsInOrder"} size="mini">

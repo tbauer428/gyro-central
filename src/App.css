@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  padding-top: 20px;
 }
 
 .welcome-header {
@@ -111,4 +111,9 @@
   justify-content: center;
   border-radius: 100%;
   transform: translate(-50%, -50%);
+}
+
+.cart-icon-container {
+  display: flex;
+  flex-direction: row;
 }

@@ -18,7 +18,7 @@ const Welcome = ({ addOrder }) => (
       <div className="location-card-container">
       {
         LocationData.map(location => 
-          <LocationCard location={location} />
+          <LocationCard location={location} key={location.id} />
         )
       }
       </div>

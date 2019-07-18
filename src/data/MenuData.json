@@ -3,19 +3,19 @@
     {
       "id": "1",
       "name": "Gyro",
-      "price": "5.99",
+      "price": 5.99,
       "description": "The OG Euro Gyro"
     },
     {
       "id": "2",
       "name": "Big Gyro",
-      "price": "7.99",
+      "price": 7.99,
       "description": "The Biggie Smalls without the Smalls"
     },
     {
       "id": "3",
       "name": "Veggie Gyro",
-      "price": "5.99",
+      "price": 5.99,
       "description": "For our herbivore brethren"
     }
   ]

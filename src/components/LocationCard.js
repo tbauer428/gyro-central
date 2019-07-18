@@ -24,9 +24,12 @@ class LocationCard extends Component {
             <Location lat={this.props.location.lat} lng={this.props.location.lng} locationName={this.props.location.name} />
             </GoogleMapReact>
             </div>
-            <div>
+            <h2>
                 {this.props.location.name}
-            </div>
+            </h2>
+            <h3>
+                {this.props.location.address}
+            </h3>
             </div>
         )
     }
