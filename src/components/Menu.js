@@ -1,6 +1,6 @@
 import React from "react";
 import { menuData } from "../data/MenuData.json";
-import { Button, Modal } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import MenuItem from "./MenuItem";
 
 const Menu = ({ submit, checkout, modalStatus, resetModal, currentPage }) => (

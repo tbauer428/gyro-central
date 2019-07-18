@@ -1,0 +1,22 @@
+{
+    "LocationData" : [
+        {
+            "id": "1",
+            "name": "Bairaktaris Taverna",
+            "lat": 37.9760836,
+            "lng": 23.7245018
+        },
+        {
+            "id": "2",
+            "name": "Oasis",
+            "lat": 35.5031965,
+            "lng": 24.0047305
+        },
+        {
+            "id": "3",
+            "name": "Ammos Gyros",
+            "lat": 36.8465525,
+            "lng": 22.2566546
+        }
+    ]
+}

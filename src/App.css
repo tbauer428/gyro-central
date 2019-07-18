@@ -88,3 +88,27 @@
   flex-direction: row;
   margin: 10px;
 }
+
+.location-card-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.location-card {
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+  text-align: center;
+}
+
+.location-point {
+  color: white;
+  background: grey;
+  padding: 15px 10px;
+  display: inline-flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  transform: translate(-50%, -50%);
+}
