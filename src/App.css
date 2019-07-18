@@ -12,9 +12,10 @@
 }
 
 .landing-page-container {
-  background-image: url("./assets/DixieCupDesign.jpg");
+  background-image: url("./assets/toomuchjazz.jpg");
+  background-size: 100%;
   min-height: 100vh;
-  background-repeat: repeat-y;
+  background-repeat: repeat-y, repeat-x;
 }
 
 .menu-item-img {
