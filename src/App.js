@@ -1,9 +1,10 @@
 import React from "react";
 import "./App.css";
 import axios from "axios";
-import LandingPage from "./components/LandingPage";
+import Welcome from "./components/Welcome";
 import Menu from "./components/Menu";
 import Cart from "./components/Cart";
+import HeaderBar from "./components/HeaderBar";
 
 class App extends React.Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class App extends React.Component {
       currentOrderID: "",
       currentOrderContents: [],
       data: [],
-      currentPage: "LandingPage"
+      currentPage: "Welcome",
+      modal: ""
     };
 
     this.eventSource = new EventSource("/EventSource");
@@ -20,7 +22,10 @@ class App extends React.Component {
 
   componentDidMount = () => {
     this.loadOrders();
+    this.eventSource.onopen = () => console.log("Connection to Backend Open");
     this.eventSource.onmessage = e => console.log(e.data);
+    this.eventSource.onerror = e =>
+      console.log("Connection to Backend Errored Out");
   };
 
   loadOrders = e => {
@@ -38,6 +43,12 @@ class App extends React.Component {
         currentPage: "Menu"
       })
     );
+  };
+
+  changeCurrentPage = newCurrentPage => {
+    this.setState({
+      currentPage: newCurrentPage
+    });
   };
 
   checkItemsInOrder = itemToBeEvaluated => {
@@ -102,9 +113,13 @@ class App extends React.Component {
   };
 
   handleCheckout = () => {
-    this.setState({
-      currentPage: "Cart"
-    });
+    if (this.state.currentOrderContents.length < 1) {
+      this.setState({ modal: "noItemsInOrder" });
+    } else {
+      this.setState({
+        currentPage: "Cart"
+      });
+    }
   };
 
   handleCancelOrder = () => {
@@ -113,27 +128,56 @@ class App extends React.Component {
         data: response.data,
         currentOrderContents: [],
         currentOrderID: "",
-        currentPage: "LandingPage"
+        currentPage: "Welcome"
       });
+    });
+  };
+
+  resetModal = () => {
+    this.setState({
+      modal: ""
     });
   };
 
   render() {
     switch (this.state.currentPage) {
-      case "LandingPage":
-        return <LandingPage addOrder={this.addOrder} />;
+      case "Welcome":
+        return (
+          <>
+            <Welcome addOrder={this.addOrder} />
+          </>
+        );
       case "Menu":
         return (
-          <Menu submit={this.addItemToOrder} checkout={this.handleCheckout} />
+          <>
+            <HeaderBar
+              changeCurrentPage={this.changeCurrentPage}
+              currentPage={this.state.currentPage}
+              handleCheckout={this.handleCheckout}
+              modalStatus={this.state.modal}
+              resetModal={this.resetModal}
+            />
+            <Menu submit={this.addItemToOrder} checkout={this.handleCheckout} />
+          </>
         );
       case "Cart":
         return (
-          <Cart
-            currentOrderContents={this.state.currentOrderContents}
-            submit={this.handleUpdateQuantity}
-            currentOrderID={this.state.currentOrderID}
-            handleCancelOrder={this.handleCancelOrder}
-          />
+          <>
+            <HeaderBar
+              changeCurrentPage={this.changeCurrentPage}
+              currentPage={this.state.currentPage}
+              handleCheckout={this.handleCheckout}
+              modalStatus={this.state.modal}
+              resetModal={this.resetModal}
+            />
+            <Cart
+              currentOrderContents={this.state.currentOrderContents}
+              submit={this.handleUpdateQuantity}
+              currentOrderID={this.state.currentOrderID}
+              handleCancelOrder={this.handleCancelOrder}
+              currentPage={this.state.currentPage}
+            />
+          </>
         );
       default:
         return;

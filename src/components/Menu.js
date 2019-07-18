@@ -1,20 +1,24 @@
 import React from "react";
 import { menuData } from "../data/MenuData.json";
+import { Button, Modal } from "semantic-ui-react";
 import MenuItem from "./MenuItem";
 
-const Menu = ({ submit, checkout }) => (
+const Menu = ({ submit, checkout, modalStatus, resetModal, currentPage }) => (
   <div className="Menu">
-    <div>Menu</div>
-    {menuData.map(item => (
-      <MenuItem
-        item={item}
-        submit={submit}
-        key={item.id}
-        defaultValue="1"
-        submitButtonText="Add to Order"
-      />
-    ))}
-    <div onClick={checkout}>Checkout</div>
+    <div className="menu-items">
+      {menuData.map(item => (
+        <MenuItem
+          item={item}
+          submit={submit}
+          key={item.id}
+          defaultValue="1"
+          submitButtonText="Add to Order"
+        />
+      ))}
+    </div>
+    <Button primary onClick={checkout}>
+      Checkout
+    </Button>
   </div>
 );
 

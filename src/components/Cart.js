@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import MenuItem from "./MenuItem";
+import { Button } from "semantic-ui-react";
 import axios from "axios";
 
 const sendOrder = (address, currentOrderID, currentOrderContents) => {
@@ -14,7 +15,8 @@ const Cart = ({
   currentOrderContents,
   submit,
   currentOrderID,
-  handleCancelOrder
+  handleCancelOrder,
+  currentPage
 }) => {
   const [address, setAddress] = useState("");
 
@@ -30,7 +32,6 @@ const Cart = ({
 
   return (
     <div>
-      <div>Cart</div>
       <div>
         {currentOrderContents.map(orderItem => {
           return (
@@ -44,16 +45,21 @@ const Cart = ({
           );
         })}
       </div>
-      <div>
+      <div className="cart-order-container">
         <input type="text" placeholder="Your address" onKeyUp={handleAddress} />
-        <div
-          onClick={() =>
-            sendOrder(address, currentOrderID, currentOrderContents)
-          }
-        >
-          Send Order
+        <div className="cart-buttons">
+          <Button
+            primary
+            onClick={() =>
+              sendOrder(address, currentOrderID, currentOrderContents)
+            }
+          >
+            Send Order
+          </Button>
+          <Button onClick={() => cancelOrder(currentOrderID)}>
+            Cancel Order
+          </Button>
         </div>
-        <div onClick={() => cancelOrder(currentOrderID)}>Cancel Order</div>
       </div>
     </div>
   );

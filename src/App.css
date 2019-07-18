@@ -1,0 +1,89 @@
+.landing-page {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.welcome-header {
+  -webkit-text-stroke-width: 0.75px;
+  -webkit-text-stroke-color: white;
+}
+
+.landing-page-container {
+  background-image: url("./assets/DixieCupDesign.jpg");
+  min-height: 100vh;
+  background-repeat: repeat-y;
+}
+
+.menu-item-img {
+  max-height: 150px;
+  max-width: 150px;
+}
+
+.big-gyro-img {
+  height: 300px;
+  width: 300px;
+}
+
+.menu-item-container {
+  flex-direction: column;
+  display: flex;
+  margin: 20px;
+  padding: 20px;
+}
+
+.Menu {
+  text-align: center;
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-bar-interior {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-bar-button:hover {
+  cursor: pointer;
+}
+
+.HeaderBar {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.modal-button {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.modal-header {
+  text-align: center;
+}
+
+.modal-content {
+  text-align: center;
+}
+
+.cart-order-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cart-buttons {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+}

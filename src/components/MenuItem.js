@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import MenuImages from "../data/MenuImages";
+import { Button } from "semantic-ui-react";
 
 const MenuItem = ({ item, submit, defaultValue, submitButtonText }) => {
   const [quantity, setQuantity] = useState(1);
@@ -14,9 +16,16 @@ const MenuItem = ({ item, submit, defaultValue, submitButtonText }) => {
   };
 
   return (
-    <>
+    <div className="menu-item-container">
       <div>
-        {item.name} ${item.price}
+        <img
+          src={MenuImages[item.id - 1].src}
+          alt={item.name}
+          className={item.id === "2" ? "big-gyro-img" : "menu-item-img"}
+        />
+        <div>
+          {item.name} ${item.price}
+        </div>
       </div>
       <form onSubmit={handleSubmit}>
         <input
@@ -25,9 +34,9 @@ const MenuItem = ({ item, submit, defaultValue, submitButtonText }) => {
           min="1"
           onChange={handleQuantity}
         />
-        <div onClick={handleSubmit}>{submitButtonText}</div>
+        <Button onClick={handleSubmit}>{submitButtonText}</Button>
       </form>
-    </>
+    </div>
   );
 };
 
