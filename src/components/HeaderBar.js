@@ -18,7 +18,11 @@ const HeaderBar = ({
           src={MenuImg}
           alt="Go to menu"
           onClick={
-            currentPage !== "Menu" ? () => changeCurrentPage("Menu") : null
+            currentPage !== "Menu"
+              ? currentPage === "Progress"
+                ? () => changeCurrentPage("Welcome")
+                : () => changeCurrentPage("Menu")
+              : null
           }
           className="header-bar-button"
         />

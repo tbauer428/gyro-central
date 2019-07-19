@@ -111,15 +111,16 @@ class App extends React.Component {
   };
 
   handleUpdateQuantity = (item, quantity) => {
-    if (quantity === 0){
-      const updatedOrderContents = this.state.currentOrderContents.filter(itemInCart => itemInCart.id !== item.id)
+    if (quantity === 0) {
+      const updatedOrderContents = this.state.currentOrderContents.filter(
+        itemInCart => itemInCart.id !== item.id
+      );
 
-        this.setState{
-          currentOrderContents: updatedOrderContents
-        }
-      
+      this.setState({
+        currentOrderContents: updatedOrderContents
+      });
     } else if (quantity < 0) {
-      alert("You cannot have a negative amount of items in your cart")
+      alert("You cannot have a negative amount of items in your cart");
     } else {
       const updatedOrderContents = this.state.currentOrderContents.map(
         itemInCart => {
