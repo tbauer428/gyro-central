@@ -47,7 +47,9 @@ const Cart = ({
       </div>
       <div className="cart-order-container">
         <div>
-          <h2>Total: {}</h2>
+          <h3>Total (pre-tax): ${total}</h3>
+          <h3>VAT: ${(total*0.13).toFixed(2)}</h3>
+          <h3>Total: ${(Number(total)+Number((total*0.13).toFixed(2))).toFixed(2)}</h3>
         </div>
         <input type="text" placeholder="Your address" onKeyUp={handleAddress} />
         <div className="cart-buttons">

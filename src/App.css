@@ -7,12 +7,11 @@
 }
 
 .welcome-header {
-  -webkit-text-stroke-width: 0.75px;
-  -webkit-text-stroke-color: white;
+  
 }
 
 .landing-page-container {
-  background-image: url("./assets/toomuchjazz.jpg");
+  background-image: url("./assets/jazz.jpg");
   background-size: 100%;
   min-height: 100vh;
   background-repeat: repeat-y, repeat-x;
@@ -92,6 +91,8 @@
 .location-card-container {
   display: flex;
   flex-direction: row;
+  -webkit-text-stroke-width: 0.25px;
+  -webkit-text-stroke-color: white;
 }
 
 .location-card {
