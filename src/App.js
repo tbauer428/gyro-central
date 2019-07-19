@@ -5,6 +5,7 @@ import Welcome from "./components/Welcome";
 import Menu from "./components/Menu";
 import Cart from "./components/Cart";
 import HeaderBar from "./components/HeaderBar";
+import ProgressPage from "./components/ProgressPage";
 
 class App extends React.Component {
   constructor(props) {
@@ -127,7 +128,7 @@ class App extends React.Component {
       this.setState({ modal: "noItemsInOrder" });
     } else {
       this.setState({
-        currentPage: "Cart",
+        currentPage: "Cart"
       });
       this.calculateNumberItemsInCart();
       this.calculateTotal();
@@ -167,9 +168,18 @@ class App extends React.Component {
     this.setState({ total: total.toFixed(2) });
   };
 
-  adjustCartCount = (quantity) => {
-    this.setState({cartCount: this.state.cartCount+quantity})
-  }
+  adjustCartCount = quantity => {
+    this.setState({ cartCount: this.state.cartCount + quantity });
+  };
+
+  resetCart = () => {
+    this.setState({
+      currentOrderContents: [],
+      currentPage: "Progress",
+      cartCount: 0,
+      total: 0
+    });
+  };
 
   render() {
     switch (this.state.currentPage) {
@@ -190,10 +200,7 @@ class App extends React.Component {
               resetModal={this.resetModal}
               cartCount={this.state.cartCount}
             />
-            <Menu
-              submit={this.addItemToOrder}
-              checkout={this.handleCheckout}
-            />
+            <Menu submit={this.addItemToOrder} checkout={this.handleCheckout} />
           </>
         );
       case "Cart":
@@ -208,12 +215,27 @@ class App extends React.Component {
               cartCount={this.state.cartCount}
             />
             <Cart
+              resetCart={this.resetCart}
               currentOrderContents={this.state.currentOrderContents}
               submit={this.handleUpdateQuantity}
               currentOrderID={this.state.currentOrderID}
               handleCancelOrder={this.handleCancelOrder}
               total={this.state.total}
             />
+          </>
+        );
+      case "Progress":
+        return (
+          <>
+            <HeaderBar
+              changeCurrentPage={this.changeCurrentPage}
+              currentPage={this.state.currentPage}
+              handleCheckout={this.handleCheckout}
+              modalStatus={this.state.modal}
+              resetModal={this.resetModal}
+              cartCount={this.state.cartCount}
+            />
+            <ProgressPage />
           </>
         );
       default:

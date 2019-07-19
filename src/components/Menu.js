@@ -3,7 +3,7 @@ import { menuData } from "../data/MenuData.json";
 import { Button } from "semantic-ui-react";
 import MenuItem from "./MenuItem";
 
-const Menu = ({ submit, checkout, adjustCartCount }) => (
+const Menu = ({ submit, checkout }) => (
   <div className="Menu">
     <div className="menu-items">
       {menuData.map(item => (

@@ -6,10 +6,9 @@
   padding-top: 20px;
 }
 
-.welcome-header {
-  
+.Progress {
+  text-align: center;
 }
-
 .landing-page-container {
   background-image: url("./assets/jazz.jpg");
   background-size: 100%;

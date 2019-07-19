@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import MenuImages from "../data/MenuImages";
 import { Button } from "semantic-ui-react";
 
-const MenuItem = ({ item, submit, defaultValue, submitButtonText, adjustCartCount }) => {
-  const [quantity, setQuantity] = useState(1);
+const MenuItem = ({ item, submit, defaultValue, submitButtonText }) => {
+  const [quantity, setQuantity] = useState(Number(defaultValue));
 
   const handleQuantity = e => {
     e.preventDefault();
