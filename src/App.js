@@ -66,61 +66,79 @@ class App extends React.Component {
   };
 
   addItemToOrder = (newItem, quantity) => {
-    if (this.checkItemsInOrder(newItem)) {
-      let itemToBeUpdated = {};
-      this.state.currentOrderContents.map(itemCurrentlyInCart => {
-        if (itemCurrentlyInCart.id === newItem.id) {
-          itemToBeUpdated = itemCurrentlyInCart;
-        }
-        return null;
-      });
-
-      itemToBeUpdated = {
-        ...itemToBeUpdated,
-        quantity: itemToBeUpdated.quantity + quantity
-      };
-      let newOrderContents = this.state.currentOrderContents.map(item => {
-        if (item.id === itemToBeUpdated.id) {
-          return itemToBeUpdated;
-        } else {
-          return item;
-        }
-      });
-      this.setState({
-        currentOrderContents: newOrderContents
-      });
+    if (quantity < 1) {
+      alert(
+        "You appear to be trying to purchase a zero or lesser amount of gyros. Please reconsider your actions..."
+      );
+      return;
     } else {
-      this.setState({
-        currentOrderContents: [
-          ...this.state.currentOrderContents,
-          {
-            ...newItem,
-            quantity
+      if (this.checkItemsInOrder(newItem)) {
+        let itemToBeUpdated = {};
+        this.state.currentOrderContents.map(itemCurrentlyInCart => {
+          if (itemCurrentlyInCart.id === newItem.id) {
+            itemToBeUpdated = itemCurrentlyInCart;
           }
-        ]
-      });
+          return null;
+        });
+
+        itemToBeUpdated = {
+          ...itemToBeUpdated,
+          quantity: itemToBeUpdated.quantity + quantity
+        };
+        let newOrderContents = this.state.currentOrderContents.map(item => {
+          if (item.id === itemToBeUpdated.id) {
+            return itemToBeUpdated;
+          } else {
+            return item;
+          }
+        });
+        this.setState({
+          currentOrderContents: newOrderContents
+        });
+      } else {
+        this.setState({
+          currentOrderContents: [
+            ...this.state.currentOrderContents,
+            {
+              ...newItem,
+              quantity
+            }
+          ]
+        });
+      }
+      this.adjustCartCount(quantity);
     }
-    this.adjustCartCount(quantity);
   };
 
   handleUpdateQuantity = (item, quantity) => {
-    const updatedOrderContents = this.state.currentOrderContents.map(
-      itemInCart => {
-        if (itemInCart.id === item.id) {
-          itemInCart.quantity = quantity;
+    if (quantity === 0){
+      const updatedOrderContents = this.state.currentOrderContents.filter(itemInCart => itemInCart.id !== item.id)
+
+        this.setState{
+          currentOrderContents: updatedOrderContents
         }
-        return itemInCart;
-      }
-    );
-    this.setState(
-      {
-        currentOrderContents: updatedOrderContents
-      },
-      () => {
-        this.calculateTotal();
-        this.calculateNumberItemsInCart();
-      }
-    );
+      
+    } else if (quantity < 0) {
+      alert("You cannot have a negative amount of items in your cart")
+    } else {
+      const updatedOrderContents = this.state.currentOrderContents.map(
+        itemInCart => {
+          if (itemInCart.id === item.id) {
+            itemInCart.quantity = quantity;
+          }
+          return itemInCart;
+        }
+      );
+      this.setState(
+        {
+          currentOrderContents: updatedOrderContents
+        },
+        () => {
+          this.calculateTotal();
+          this.calculateNumberItemsInCart();
+        }
+      );
+    }
   };
 
   handleCheckout = () => {
